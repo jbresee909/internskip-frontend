@@ -14,7 +14,7 @@ const Register = () => {
   const handleRegisterUser = e => {
     e.preventDefault();
 
-    //checks if password fields match
+    //checks if password fields match -
     if (password !== passwordConfirmation) {
       alert("password fields don't match");
     }
