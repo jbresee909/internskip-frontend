@@ -28,7 +28,7 @@ const Register = () => {
         phone: phone
       })
       .then(user => {
-        cookie.set("crumbl", user.data.token, { expires: 1, secure: true });
+        cookie.set("crumbl", user.data.token, { expires: 1 });
         window.open("/", "_self");
       })
       .catch(err => console.log(err));

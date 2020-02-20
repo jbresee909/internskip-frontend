@@ -19,7 +19,7 @@ const Login = () => {
       })
       .then(user => {
         //embeds cookie & returns user to home page
-        cookie.set("crumbl", user.data.token, { expires: 1, secure: true });
+        cookie.set("crumbl", user.data.token, { expires: 1 });
         window.open("/", "_self");
       })
       .catch(err => console.log(err));

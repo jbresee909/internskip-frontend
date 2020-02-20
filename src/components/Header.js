@@ -4,7 +4,6 @@ import cookie from "js-cookie";
 import axios from "axios";
 
 const Header = props => {
-  cookie.remove("crumbl");
   const [searchDropDown, setSearchDropDown] = useState(false);
   const currentUser = props.currentUser.data;
   const handleLogOutUser = () => {
