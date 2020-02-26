@@ -4,7 +4,7 @@ import { Link } from "react-router-dom";
 
 const Hero = () => {
   return (
-    <Jumbotron className="my-0 hero text-white p-5" style={{ height: "350px" }}>
+    <Jumbotron className="my-0 hero text-white p-5" style={{ height: "45%" }}>
       <div
         className="p-3 mt-3"
         style={{
@@ -20,11 +20,13 @@ const Hero = () => {
         </div>
         <p>
           <Link to="/register">
-            <Button variant="primary mx-2">Get Started</Button>
+            <Button variant="primary mx-2" className="mt-2">
+              Get Started
+            </Button>
           </Link>
           <Button
             variant="light"
-            className="text-primary mx-2"
+            className="text-primary mx-2 mt-2"
             href="#how-it-works"
           >
             How it Works

@@ -44,7 +44,7 @@ const PostProject = () => {
     <div style={{ marginTop: "120px" }}>
       <Card
         style={{ display: slideDisplays[0].display ? "" : "none" }}
-        className="w-75 my-4 mx-auto p-5"
+        className="post-project-card my-4 mx-auto p-5"
       >
         <ProgressBar now={25} className="mb-3" />
         <Form>
@@ -95,7 +95,7 @@ const PostProject = () => {
 
       <Card
         style={{ display: slideDisplays[1].display ? "" : "none" }}
-        className="w-75 my-4 mx-auto p-5"
+        className="post-project-card my-4 mx-auto p-5"
       >
         <ProgressBar now={50} className="mb-3" />
         <h3>Upload Project Resources</h3>
@@ -124,7 +124,7 @@ const PostProject = () => {
 
       <Card
         style={{ display: slideDisplays[2].display ? "" : "none" }}
-        className="w-75 my-4 mx-auto p-5"
+        className="post-project-card my-4 mx-auto p-5"
       >
         <ProgressBar now={75} className="mb-3" />
         <h3>Set Visibility</h3>
@@ -165,7 +165,7 @@ const PostProject = () => {
 
       <Card
         style={{ display: slideDisplays[3].display ? "" : "none" }}
-        className="w-75 my-4 mx-auto p-5"
+        className="post-project-card my-4 mx-auto p-5"
       >
         <ProgressBar now={100} className="mb-3" />
         <h3>Review Details</h3>
@@ -196,7 +196,7 @@ const PostProject = () => {
 
       <Card
         style={{ display: slideDisplays[4].display ? "" : "none" }}
-        className="w-75 my-4 mx-auto p-5 text-success"
+        className="post-project-card my-4 mx-auto p-5 text-success"
       >
         <h3>Project Created Successfully!</h3>
         <p>Project Details</p>

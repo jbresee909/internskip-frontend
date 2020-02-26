@@ -36,7 +36,7 @@ const Register = () => {
 
   return (
     <Card
-      className="w-50 mx-auto p-3"
+      className="_card mx-auto p-3"
       style={{ marginTop: "120px", marginBottom: "30px" }}
     >
       <Form>
