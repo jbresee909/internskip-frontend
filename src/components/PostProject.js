@@ -3,7 +3,7 @@ import { ProgressBar, Button, Card, Form } from "react-bootstrap";
 import axios from "axios";
 
 const PostProject = () => {
-  // sets values of properties
+  // sets values of properties.
   const [title, setTitle] = useState("");
   const [description, setDescription] = useState("");
   const [selectedCategory, setSelectedCategory] = useState("");
