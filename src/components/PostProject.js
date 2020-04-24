@@ -2,22 +2,87 @@ import React, { useState, useEffect } from "react";
 import { ProgressBar, Button, Card, Form } from "react-bootstrap";
 import axios from "axios";
 
+function useImages(files) {
+  const [images, setImages] = useState([]);
+  const [nonImageFiles, setNonImageFiles] = useState([]);
+
+  useEffect(
+    function () {
+      const newImages = [];
+      const nonImages = [];
+      for (let i = 0; i < files.length; i++) {
+        const file = files[i];
+
+        if (!file.type.startsWith("image/")) {
+          nonImages.push(file);
+          continue;
+        }
+
+        const img = document.createElement("img");
+        img.classList.add("obj");
+        img.file = file;
+        const reader = new FileReader();
+        newImages.push(
+          new Promise((resolve, reject) => {
+            reader.onload = (function (aImg) {
+              return function (e) {
+                aImg.src = e.target.result;
+                resolve(aImg);
+              };
+            })(img);
+            reader.onabort = reject;
+            reader.onerror = reject;
+          })
+        );
+        reader.readAsDataURL(file);
+      }
+      Promise.all(newImages).then(function (newImages) {
+        setImages(newImages.concat(images));
+      });
+      setNonImageFiles(nonImageFiles.concat(nonImages));
+    },
+    [files]
+  );
+
+  function removeImageFile(img) {
+    setImages(images.filter((image) => image !== img));
+  }
+
+  function removeNonImageFile(_file) {
+    setNonImageFiles(nonImageFiles.filter((file) => file !== _file));
+  }
+
+  return {
+    nonImageFiles,
+    images,
+    removeImageFile,
+    removeNonImageFile,
+  };
+}
+
 const PostProject = () => {
   // sets values of properties
+  const [files, setFiles] = useState([]);
+  const {
+    nonImageFiles,
+    images,
+    removeImageFile,
+    removeNonImageFile,
+  } = useImages(files);
   const [title, setTitle] = useState("");
   const [description, setDescription] = useState("");
   const [selectedCategory, setSelectedCategory] = useState("");
   const [visibility, setVisibility] = useState("");
 
   const [projectCategories, setProjectCategories] = useState({
-    data: []
+    data: [],
   });
 
   useEffect(() => {
     axios
       .get("https://bresee-internskip.herokuapp.com/api/project-categories")
-      .then(categories => setProjectCategories(categories))
-      .catch(err => console.log(err));
+      .then((categories) => setProjectCategories(categories))
+      .catch((err) => console.log(err));
   }, []);
 
   // sets display of all the slides
@@ -26,7 +91,7 @@ const PostProject = () => {
     { name: "slide two", display: false },
     { name: "slide three", display: false },
     { name: "slide four", display: false },
-    { name: "slide five", display: false }
+    { name: "slide five", display: false },
   ]);
 
   const handleSetSlideDisplays = (hide, show) => {
@@ -39,6 +104,26 @@ const PostProject = () => {
   const handleSubmit = () => {
     handleSetSlideDisplays(3, 4);
   };
+
+  function dragenter(e) {
+    e.stopPropagation();
+    e.preventDefault();
+  }
+
+  function dragover(e) {
+    e.stopPropagation();
+    e.preventDefault();
+  }
+
+  function drop(e) {
+    e.stopPropagation();
+    e.preventDefault();
+
+    const dt = e.dataTransfer;
+    const files = dt.files;
+
+    setFiles(files);
+  }
 
   return (
     <div style={{ marginTop: "120px" }}>
@@ -55,13 +140,13 @@ const PostProject = () => {
             <Form.Control
               placeholder="Example: 'Marketing Strategy'"
               value={title}
-              onChange={e => setTitle(e.target.value)}
+              onChange={(e) => setTitle(e.target.value)}
             />
           </Form.Group>
           <Form.Label style={{ display: "block" }}>Project Category</Form.Label>
           <select
             className="mb-3"
-            onChange={e => setSelectedCategory(e.target.value)}
+            onChange={(e) => setSelectedCategory(e.target.value)}
           >
             <option>Select a Category</option>
             {projectCategories.data.map((category, index) => (
@@ -77,7 +162,7 @@ const PostProject = () => {
               rows="8"
               placeholder="Enter project description..."
               value={description}
-              onChange={e => setDescription(e.target.value)}
+              onChange={(e) => setDescription(e.target.value)}
             />
           </Form.Group>
         </Form>
@@ -102,6 +187,44 @@ const PostProject = () => {
         <p className="text-muted">
           Choose any files, images, or assets to include in project.
         </p>
+        <div
+          className="drag-n-drop-file-upload"
+          onDragEnter={dragenter}
+          onDragOver={dragover}
+          onDrop={drop}
+        >
+          <div>
+            <label>Drag and Drop files here</label>
+          </div>
+          {nonImageFiles.map(function (file) {
+            return (
+              <div>
+                {file.name}
+                <span onClick={() => removeNonImageFile(file)}>❌</span>
+              </div>
+            );
+          })}
+          {/* <input type="file" id="input" multiple></input> */}
+          {images.map(
+            (image) =>
+              image &&
+              image.src && (
+                <div className="drag-n-drop-item">
+                  <div
+                    className="drag-n-drop-close"
+                    onClick={() => removeImageFile(image)}
+                  >
+                    ❌
+                  </div>
+                  <img
+                    className="drag-n-drop-image"
+                    alt={image.file.name}
+                    src={image.src}
+                  />
+                </div>
+              )
+          )}
+        </div>
         <div className="text-right">
           <Button
             style={{ width: "100px" }}
@@ -132,7 +255,7 @@ const PostProject = () => {
           Choose who can see and work on your project.
         </p>
         <select
-          onChange={e => {
+          onChange={(e) => {
             setVisibility(e.target.value);
           }}
           className="mb-4"

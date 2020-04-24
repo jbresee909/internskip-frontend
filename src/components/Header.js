@@ -3,7 +3,7 @@ import { Nav, Dropdown, Navbar } from "react-bootstrap";
 import cookie from "js-cookie";
 import axios from "axios";
 
-const Header = props => {
+const Header = (props) => {
   const [searchDropDown, setSearchDropDown] = useState(false);
   const currentUser = props.currentUser.data;
   const handleLogOutUser = () => {
@@ -13,24 +13,24 @@ const Header = props => {
 
   // get projects | update projects
   const [projects, setProjects] = useState({
-    data: []
+    data: [],
   });
 
   useEffect(() => {
     axios
       .get("https://bresee-internskip.herokuapp.com/api/projects/header-menu")
-      .then(projects => setProjects(projects))
-      .catch(err => console.log(err));
+      .then((projects) => setProjects(projects))
+      .catch((err) => console.log(err));
   }, []);
 
-  const handleUpdateProjects = title => {
+  const handleUpdateProjects = (title) => {
     axios
       .get(
         "https://bresee-internskip.herokuapp.com/api/projects/find-by-title/" +
           title
       )
-      .then(projects => setProjects(projects))
-      .catch(err => console.log(err));
+      .then((projects) => setProjects(projects))
+      .catch((err) => console.log(err));
   };
 
   return (
@@ -57,7 +57,7 @@ const Header = props => {
               href="/login"
               className="bg-light text-primary rounded px-3 mr-3"
               style={{
-                display: cookie.get("crumbl") ? "none" : ""
+                display: cookie.get("crumbl") ? "none" : "",
               }}
             >
               Login
@@ -67,7 +67,7 @@ const Header = props => {
               href="/register"
               className="bg-light text-primary rounded px-3 mr-3"
               style={{
-                display: cookie.get("crumbl") ? "none" : ""
+                display: cookie.get("crumbl") ? "none" : "",
               }}
             >
               Sign Up
@@ -77,7 +77,7 @@ const Header = props => {
               href="/create-project"
               className="bg-primary text-white rounded mx-2 px-2"
               style={{
-                display: cookie.get("crumbl") ? "none" : ""
+                display: cookie.get("crumbl") ? "" : "none",
               }}
             >
               Post a Project
@@ -90,12 +90,12 @@ const Header = props => {
           >
             <Dropdown.Toggle variant="light" id="dropdown-basic">
               <input
-                onChange={e => handleUpdateProjects(e.target.value)}
+                onChange={(e) => handleUpdateProjects(e.target.value)}
                 placeholder="Search Projects..."
                 className="p-2"
                 style={{
                   width: "225px",
-                  borderRadius: "20px"
+                  borderRadius: "20px",
                 }}
               ></input>
             </Dropdown.Toggle>
