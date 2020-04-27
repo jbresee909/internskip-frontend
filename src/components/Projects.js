@@ -2,7 +2,6 @@ import React, { useState, useEffect } from "react";
 import axios from "axios";
 import { Row, Card, Col } from "react-bootstrap";
 import { Link } from "react-router-dom";
-import withBaseURL from "../utils/withBaseURL.js";
 
 const Projects = (props) => {
   const [projects, setProjects] = useState({

@@ -3,7 +3,6 @@ import { Form, Card, Button } from "react-bootstrap";
 import { Link } from "react-router-dom";
 import axios from "axios";
 import cookie from "js-cookie";
-import withBaseURL from "../utils/withBaseURL.js";
 
 const Login = () => {
   const [username, setUsername] = useState("");

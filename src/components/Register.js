@@ -2,7 +2,6 @@ import React, { useState } from "react";
 import { Form, Card, Button, Row, Col } from "react-bootstrap";
 import axios from "axios";
 import cookie from "js-cookie";
-import withBaseURL from "../utils/withBaseURL.js";
 
 const Register = () => {
   const [firstName, setFirstName] = useState("");
@@ -21,7 +20,7 @@ const Register = () => {
     }
 
     axios
-      .post(withBaseURL("api/users/add"), {
+      .post("https://bresee-internskip.herokuapp.com/api/users/add", {
         first_name: firstName,
         last_name: lastName,
         username: username,

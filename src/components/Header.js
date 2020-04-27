@@ -2,7 +2,6 @@ import React, { useState, useEffect } from "react";
 import { Nav, Dropdown, Navbar } from "react-bootstrap";
 import cookie from "js-cookie";
 import axios from "axios";
-import withBaseURL from "../utils/withBaseURL.js";
 
 const Header = (props) => {
   const [searchDropDown, setSearchDropDown] = useState(false);

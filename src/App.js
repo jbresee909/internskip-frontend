@@ -4,7 +4,6 @@ import "bootstrap/dist/css/bootstrap.min.css";
 import { BrowserRouter as Router, Route } from "react-router-dom";
 import cookie from "js-cookie";
 import axios from "axios";
-import withBaseURL from "./utils/withBaseURL.js";
 
 import Header from "./components/Header";
 import Main from "./components/Main";

@@ -4,7 +4,6 @@ import Hero from "./Hero";
 import ProjectCategoryCard from "./ProjectCategoryCard";
 import { Row, Col, Jumbotron, Container, Button, Card } from "react-bootstrap";
 import axios from "axios";
-import withBaseURL from "../utils/withBaseURL.js";
 
 const Main = () => {
   const [projectCategories, setProjectCategories] = useState({

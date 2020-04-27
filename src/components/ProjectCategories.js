@@ -2,7 +2,6 @@ import React, { useState, useEffect } from "react";
 import { Row } from "react-bootstrap";
 import axios from "axios";
 import ProjectCategoryCard from "./ProjectCategoryCard";
-import withBaseURL from "../utils/withBaseURL.js";
 
 const ProjectCategories = () => {
   const [categories, setCategories] = useState({
