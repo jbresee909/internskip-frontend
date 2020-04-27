@@ -58,12 +58,7 @@ const PostProject = () => {
   function removeFile(file) {
     setFiles(files.filter((_file) => _file !== file));
   }
-  const {
-    nonImageFiles,
-    images,
-    removeImageFile,
-    removeNonImageFile,
-  } = useImages(files);
+  const { nonImageFiles, images } = useImages(files);
   const [title, setTitle] = useState("");
   const [description, setDescription] = useState("");
   const [selectedCategory, setSelectedCategory] = useState("");
@@ -210,7 +205,7 @@ const PostProject = () => {
             return (
               <div>
                 {file.name}
-                <span onClick={() => removeFile(file)}>❌</span>
+                <span onClick={() => removeFile(file)}>X</span>
               </div>
             );
           })}
@@ -224,7 +219,7 @@ const PostProject = () => {
                     className="drag-n-drop-close"
                     onClick={() => removeFile(image.file)}
                   >
-                    ❌
+                    X
                   </div>
                   <img
                     className="drag-n-drop-image"
