@@ -2,6 +2,7 @@ import React, { useState, useEffect } from "react";
 import { Nav, Dropdown, Navbar } from "react-bootstrap";
 import cookie from "js-cookie";
 import axios from "axios";
+import withBaseURL from "../utils/withBaseURL.js";
 
 const Header = (props) => {
   const [searchDropDown, setSearchDropDown] = useState(false);
@@ -18,17 +19,14 @@ const Header = (props) => {
 
   useEffect(() => {
     axios
-      .get("https://bresee-internskip.herokuapp.com/api/projects/header-menu")
+      .get(withBaseURL("api/projects/header-menu"))
       .then((projects) => setProjects(projects))
       .catch((err) => console.log(err));
   }, []);
 
   const handleUpdateProjects = (title) => {
     axios
-      .get(
-        "https://bresee-internskip.herokuapp.com/api/projects/find-by-title/" +
-          title
-      )
+      .get(withBaseURL("api/projects/find-by-title/") + title)
       .then((projects) => setProjects(projects))
       .catch((err) => console.log(err));
   };

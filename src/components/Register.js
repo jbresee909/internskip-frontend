@@ -2,6 +2,7 @@ import React, { useState } from "react";
 import { Form, Card, Button, Row, Col } from "react-bootstrap";
 import axios from "axios";
 import cookie from "js-cookie";
+import withBaseURL from "../utils/withBaseURL.js";
 
 const Register = () => {
   const [firstName, setFirstName] = useState("");
@@ -11,7 +12,7 @@ const Register = () => {
   const [passwordConfirmation, setPasswordConfirmation] = useState("");
   const [phone, setPhone] = useState("");
 
-  const handleRegisterUser = e => {
+  const handleRegisterUser = (e) => {
     e.preventDefault();
 
     //checks if password fields match -
@@ -20,18 +21,18 @@ const Register = () => {
     }
 
     axios
-      .post("https://bresee-internskip.herokuapp.com/api/users/add", {
+      .post(withBaseURL("api/users/add"), {
         first_name: firstName,
         last_name: lastName,
         username: username,
         password: password,
-        phone: phone
+        phone: phone,
       })
-      .then(user => {
+      .then((user) => {
         cookie.set("crumbl", user.data.token, { expires: 1 });
         window.open("/", "_self");
       })
-      .catch(err => console.log(err));
+      .catch((err) => console.log(err));
   };
 
   return (
@@ -48,14 +49,14 @@ const Register = () => {
               <Form.Control
                 placeholder="First Name"
                 value={firstName}
-                onChange={e => setFirstName(e.target.value)}
+                onChange={(e) => setFirstName(e.target.value)}
               />
             </Col>
             <Col md={6}>
               <Form.Control
                 placeholder="Last Name"
                 value={lastName}
-                onChange={e => setLastName(e.target.value)}
+                onChange={(e) => setLastName(e.target.value)}
               />
             </Col>
           </Row>
@@ -66,7 +67,7 @@ const Register = () => {
             type="tel"
             placeholder="Enter Phone Number"
             value={phone}
-            onChange={e => setPhone(e.target.value)}
+            onChange={(e) => setPhone(e.target.value)}
           />
         </Form.Group>
         <Form.Group controlId="formBasicEmail">
@@ -75,7 +76,7 @@ const Register = () => {
             type="email"
             placeholder="Enter Email"
             value={username}
-            onChange={e => setUsername(e.target.value)}
+            onChange={(e) => setUsername(e.target.value)}
           />
         </Form.Group>
         <Form.Group controlId="formBasicPassword">
@@ -84,7 +85,7 @@ const Register = () => {
             type="password"
             placeholder="Password"
             value={password}
-            onChange={e => setPassword(e.target.value)}
+            onChange={(e) => setPassword(e.target.value)}
           />
         </Form.Group>
         <Form.Group controlId="formBasicPasswordConfirm">
@@ -93,13 +94,13 @@ const Register = () => {
             type="password"
             placeholder="Password"
             value={passwordConfirmation}
-            onChange={e => setPasswordConfirmation(e.target.value)}
+            onChange={(e) => setPasswordConfirmation(e.target.value)}
           />
         </Form.Group>
         <Button
           variant="primary"
           type="submit"
-          onClick={e => handleRegisterUser(e)}
+          onClick={(e) => handleRegisterUser(e)}
         >
           Register
         </Button>

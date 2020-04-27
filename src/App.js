@@ -4,6 +4,7 @@ import "bootstrap/dist/css/bootstrap.min.css";
 import { BrowserRouter as Router, Route } from "react-router-dom";
 import cookie from "js-cookie";
 import axios from "axios";
+import withBaseURL from "./utils/withBaseURL.js";
 
 import Header from "./components/Header";
 import Main from "./components/Main";
@@ -19,8 +20,14 @@ import Footer from "./components/Footer";
 function App() {
   const [auth, setAuth] = useState(false);
   const [currentUser, setCurrentUser] = useState({
-    data: { first_name: "", last_name: "", username: "", phone: "" }
+    data: { first_name: "", last_name: "", username: "", phone: "" },
   });
+  console.log("HELLO");
+  if (process.env.NODE_ENV === "development") {
+    console.log("foo");
+  } else {
+    console.log("bar");
+  }
 
   useEffect(() => {
     // Checks for cookie
@@ -32,16 +39,16 @@ function App() {
     // Passes down user info to other components
     const token = cookie.get("crumbl");
     axios
-      .get("https://bresee-internskip.herokuapp.com/api/users/auth/user", {
+      .get(withBaseURL("api/users/auth/user"), {
         headers: {
-          "x-auth-token": token
-        }
+          "x-auth-token": token,
+        },
       })
-      .then(user => {
+      .then((user) => {
         setCurrentUser(user);
         setAuth(true);
       })
-      .catch(err => console.log(err));
+      .catch((err) => console.log(err));
   }, []);
   return (
     <Router>

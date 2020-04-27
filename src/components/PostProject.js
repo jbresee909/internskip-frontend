@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from "react";
 import { ProgressBar, Button, Card, Form } from "react-bootstrap";
 import axios from "axios";
+import withBaseURL from "../utils/withBaseURL.js";
 
 function useImages(files) {
   const [images, setImages] = useState([]);
@@ -13,7 +14,7 @@ function useImages(files) {
       for (let i = 0; i < files.length; i++) {
         const file = files[i];
 
-        if (!file.type.startsWith("image/")) {
+        if (!file.type || !file.type.startsWith("image/")) {
           nonImages.push(file);
           continue;
         }
@@ -37,32 +38,26 @@ function useImages(files) {
         reader.readAsDataURL(file);
       }
       Promise.all(newImages).then(function (newImages) {
-        setImages(newImages.concat(images));
+        setImages(newImages);
       });
-      setNonImageFiles(nonImageFiles.concat(nonImages));
+      setNonImageFiles(nonImages);
     },
     [files]
   );
 
-  function removeImageFile(img) {
-    setImages(images.filter((image) => image !== img));
-  }
-
-  function removeNonImageFile(_file) {
-    setNonImageFiles(nonImageFiles.filter((file) => file !== _file));
-  }
-
   return {
     nonImageFiles,
     images,
-    removeImageFile,
-    removeNonImageFile,
   };
 }
 
 const PostProject = () => {
   // sets values of properties
   const [files, setFiles] = useState([]);
+
+  function removeFile(file) {
+    setFiles(files.filter((_file) => _file !== file));
+  }
   const {
     nonImageFiles,
     images,
@@ -80,7 +75,7 @@ const PostProject = () => {
 
   useEffect(() => {
     axios
-      .get("https://bresee-internskip.herokuapp.com/api/project-categories")
+      .get(withBaseURL("api/project-categories"))
       .then((categories) => setProjectCategories(categories))
       .catch((err) => console.log(err));
   }, []);
@@ -103,6 +98,21 @@ const PostProject = () => {
 
   const handleSubmit = () => {
     handleSetSlideDisplays(3, 4);
+    const bodyFormData = new FormData();
+    const url = withBaseURL("/api/projects/add");
+    bodyFormData.set("title", title);
+    bodyFormData.set("description", description);
+    bodyFormData.set("organization", "ACME Co.");
+    bodyFormData.set("projectCategory", selectedCategory);
+    for (const file of files) {
+      bodyFormData.append("files", file);
+    }
+    axios({
+      method: "post",
+      url: url,
+      data: bodyFormData,
+      headers: { "Content-Type": "multipart/form-data" },
+    }).catch((err) => console.log(err));
   };
 
   function dragenter(e) {
@@ -120,9 +130,9 @@ const PostProject = () => {
     e.preventDefault();
 
     const dt = e.dataTransfer;
-    const files = dt.files;
+    const _files = dt.files;
 
-    setFiles(files);
+    setFiles([...files].concat([..._files]));
   }
 
   return (
@@ -200,7 +210,7 @@ const PostProject = () => {
             return (
               <div>
                 {file.name}
-                <span onClick={() => removeNonImageFile(file)}>❌</span>
+                <span onClick={() => removeFile(file)}>❌</span>
               </div>
             );
           })}
@@ -212,7 +222,7 @@ const PostProject = () => {
                 <div className="drag-n-drop-item">
                   <div
                     className="drag-n-drop-close"
-                    onClick={() => removeImageFile(image)}
+                    onClick={() => removeFile(image.file)}
                   >
                     ❌
                   </div>
@@ -302,7 +312,7 @@ const PostProject = () => {
             style={{ width: "100px" }}
             className="mx-2"
             variant="primary"
-            onClick={() => handleSetSlideDisplays(2, 1)}
+            onClick={() => handleSetSlideDisplays(3, 2)}
           >
             Previous
           </Button>

@@ -2,17 +2,18 @@ import React, { useState, useEffect } from "react";
 import { Row } from "react-bootstrap";
 import axios from "axios";
 import ProjectCategoryCard from "./ProjectCategoryCard";
+import withBaseURL from "../utils/withBaseURL.js";
 
 const ProjectCategories = () => {
   const [categories, setCategories] = useState({
-    data: []
+    data: [],
   });
 
   useEffect(() => {
     axios
-      .get("https://bresee-internskip.herokuapp.com/api/project-categories")
-      .then(categories => setCategories(categories))
-      .catch(err => console.log(err));
+      .get(withBaseURL("api/project-categories"))
+      .then((categories) => setCategories(categories))
+      .catch((err) => console.log(err));
   }, []);
   return (
     <div

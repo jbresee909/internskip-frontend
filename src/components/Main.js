@@ -4,19 +4,18 @@ import Hero from "./Hero";
 import ProjectCategoryCard from "./ProjectCategoryCard";
 import { Row, Col, Jumbotron, Container, Button, Card } from "react-bootstrap";
 import axios from "axios";
+import withBaseURL from "../utils/withBaseURL.js";
 
 const Main = () => {
   const [projectCategories, setProjectCategories] = useState({
-    data: []
+    data: [],
   });
 
   useEffect(() => {
     axios
-      .get(
-        "https://bresee-internskip.herokuapp.com/api/project-categories/home-page"
-      )
-      .then(categories => setProjectCategories(categories))
-      .catch(err => console.log(err));
+      .get(withBaseURL("api/project-categories/home-page"))
+      .then((categories) => setProjectCategories(categories))
+      .catch((err) => console.log(err));
   }, []);
 
   return (
@@ -29,7 +28,7 @@ const Main = () => {
         <Row>
           {projectCategories.data.map((category, index) => (
             <ProjectCategoryCard
-              link={"/projects/" + category.name.toLowerCase()}
+              link={"/projects/" + encodeURIComponent(category.name)}
               name={category.name}
               img={category.imageURL}
               index={index}
