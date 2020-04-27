@@ -5,6 +5,10 @@
   border-radius: 5px;
 }
 
+.project-file {
+  margin-left: 20px;
+}
+
 select {
   font-size: 16px;
   font-family: sans-serif;
@@ -53,6 +57,38 @@ select option {
 
 .post-project-card {
   width: 75%;
+}
+
+.drag-n-drop-file-upload {
+  padding: 2.4em;
+  background-color: #ddd;
+  border: 1px solid #aaa;
+  border-radius: 3px;
+  text-align: center;
+  display: flex;
+  justifycontent: center;
+  alignitems: center;
+  flex-direction: column;
+  margin: 0.7em 0;
+  color: #555;
+}
+
+.drag-n-drop-item {
+  max-width: 100%;
+  position: relative;
+}
+
+.drag-n-drop-close {
+  position: absolute;
+  z-index: 2;
+  padding: 0.7em;
+  background-color: #7777;
+  top: 0;
+  right: 0;
+}
+
+.drag-n-drop-image {
+  max-width: 100%;
 }
 
 /* HERO ----------------------------------------------------------------------------------------** */

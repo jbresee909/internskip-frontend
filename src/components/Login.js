@@ -3,26 +3,27 @@ import { Form, Card, Button } from "react-bootstrap";
 import { Link } from "react-router-dom";
 import axios from "axios";
 import cookie from "js-cookie";
+import withBaseURL from "../utils/withBaseURL.js";
 
 const Login = () => {
   const [username, setUsername] = useState("");
   const [password, setPassword] = useState("");
 
-  const handleAuthenticateUser = e => {
+  const handleAuthenticateUser = (e) => {
     e.preventDefault();
 
     // sends request to login user
     axios
-      .post("https://bresee-internskip.herokuapp.com/api/users/auth", {
+      .post(withBaseURL("api/users/auth"), {
         username: username,
-        password: password
+        password: password,
       })
-      .then(user => {
+      .then((user) => {
         //embeds cookie & returns user to home page
         cookie.set("crumbl", user.data.token, { expires: 1 });
         window.open("/", "_self");
       })
-      .catch(err => console.log(err));
+      .catch((err) => console.log(err));
   };
 
   return (
@@ -35,7 +36,7 @@ const Login = () => {
         <Form.Group controlId="formBasicEmail">
           <Form.Label>Email address</Form.Label>
           <Form.Control
-            onChange={e => setUsername(e.target.value)}
+            onChange={(e) => setUsername(e.target.value)}
             value={username}
             type="email"
             placeholder="Enter email"
@@ -45,7 +46,7 @@ const Login = () => {
         <Form.Group controlId="formBasicPassword">
           <Form.Label>Password</Form.Label>
           <Form.Control
-            onChange={e => setPassword(e.target.value)}
+            onChange={(e) => setPassword(e.target.value)}
             value={password}
             type="password"
             placeholder="Password"
@@ -57,7 +58,7 @@ const Login = () => {
         <Button
           variant="primary"
           type="submit"
-          onClick={e => handleAuthenticateUser(e)}
+          onClick={(e) => handleAuthenticateUser(e)}
         >
           Login
         </Button>

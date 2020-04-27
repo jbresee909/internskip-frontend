@@ -2,17 +2,18 @@ import React, { useState, useEffect } from "react";
 import axios from "axios";
 import { Row, Card, Col } from "react-bootstrap";
 import { Link } from "react-router-dom";
+import withBaseURL from "../utils/withBaseURL.js";
 
-const Projects = props => {
+const Projects = (props) => {
   const [projects, setProjects] = useState({
-    data: []
+    data: [],
   });
   useEffect(() => {
     const category = props.match.params.category;
     axios
-      .get("https://bresee-internskip.herokuapp.com/api/projects/" + category)
-      .then(projects => setProjects(projects))
-      .catch(err => console.log(err));
+      .get(withBaseURL("api/projects/") + category)
+      .then((projects) => setProjects(projects))
+      .catch((err) => console.log(err));
   }, [props.match.params.category]);
 
   return (
