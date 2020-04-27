@@ -39,7 +39,7 @@ function App() {
     // Passes down user info to other components
     const token = cookie.get("crumbl");
     axios
-      .get(withBaseURL("api/users/auth/user"), {
+      .get("https://bresee-internskip.herokuapp.com/api/users/auth/user", {
         headers: {
           "x-auth-token": token,
         },

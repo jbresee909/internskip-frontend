@@ -14,7 +14,7 @@ const Login = () => {
 
     // sends request to login user
     axios
-      .post(withBaseURL("api/users/auth"), {
+      .post("https://bresee-internskip.herokuapp.com/api/users/auth", {
         username: username,
         password: password,
       })

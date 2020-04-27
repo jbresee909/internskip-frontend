@@ -11,7 +11,10 @@ const ProjectTemplate = (props) => {
   });
   useEffect(() => {
     axios
-      .get(withBaseURL("api/projects/project/") + props.match.params.id)
+      .get(
+        "https://bresee-internskip.herokuapp.com/api/projects/project/" +
+          props.match.params.id
+      )
       .then((project) => {
         setProjectState({ project });
       })

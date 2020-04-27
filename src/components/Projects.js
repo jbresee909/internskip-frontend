@@ -11,7 +11,7 @@ const Projects = (props) => {
   useEffect(() => {
     const category = props.match.params.category;
     axios
-      .get(withBaseURL("api/projects/") + category)
+      .get("https://bresee-internskip.herokuapp.com/api/projects/" + category)
       .then((projects) => setProjects(projects))
       .catch((err) => console.log(err));
   }, [props.match.params.category]);

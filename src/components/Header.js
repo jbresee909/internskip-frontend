@@ -19,14 +19,17 @@ const Header = (props) => {
 
   useEffect(() => {
     axios
-      .get(withBaseURL("api/projects/header-menu"))
+      .get("https://bresee-internskip.herokuapp.com/api/projects/header-menu")
       .then((projects) => setProjects(projects))
       .catch((err) => console.log(err));
   }, []);
 
   const handleUpdateProjects = (title) => {
     axios
-      .get(withBaseURL("api/projects/find-by-title/") + title)
+      .get(
+        "https://bresee-internskip.herokuapp.com/api/projects/find-by-title/" +
+          title
+      )
       .then((projects) => setProjects(projects))
       .catch((err) => console.log(err));
   };

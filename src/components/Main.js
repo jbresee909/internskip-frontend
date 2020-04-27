@@ -13,7 +13,9 @@ const Main = () => {
 
   useEffect(() => {
     axios
-      .get(withBaseURL("api/project-categories/home-page"))
+      .get(
+        "https://bresee-internskip.herokuapp.com/api/project-categories/home-page"
+      )
       .then((categories) => setProjectCategories(categories))
       .catch((err) => console.log(err));
   }, []);
